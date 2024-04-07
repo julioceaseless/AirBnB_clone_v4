@@ -6,13 +6,11 @@ $(document).ready(function () {
   $('input[type="checkbox"]').change(function () {
     // retrieve amenity id from data-amenity-id attribute
     const amenityId = $(this).data('id');
-    // retrieve amenity name
-    const amenityName = $(this).data('name');
 
     // Check if the checkbox is checked
     if ($(this).is(':checked')) {
       // Add the Amenity ID to the amenities array if it's not already there
-      selectedAmenities[amenityId] = amenityName;
+      selectedAmenities[amenityId] = true;
     } else {
       // Remove the Amenity ID from the amenities array
       delete selectedAmenities[amenityId];
@@ -48,6 +46,37 @@ $(document).ready(function () {
       } else {
         $('#api_status').removeClass('available');
       }
+    }
+  });
+
+  /* Fetch Places */
+  $.ajax({
+    url: 'http://0.0.0.0:5001/api/v1/places_search/',
+    method: 'POST',
+    data: JSON.stringify({}),
+    contentType: 'application/json',
+    success: function (response) {
+      $('SECTION.places').empty();
+      for (const r of response) {
+        const article = ['<article>',
+          '<div class="title_box">',
+        `<h2>${r.name}</h2>`,
+        `<div class="price_by_night">$${r.price_by_night}</div>`,
+        '</div>',
+        '<div class="information">',
+        `<div class="max_guest">${r.max_guest} Guest(s)</div>`,
+        `<div class="number_rooms">${r.number_rooms} Bedroom(s)</div>`,
+        `<div class="number_bathrooms">${r.number_bathrooms} Bathroom(s)</div>`,
+        '</div>',
+        '<div class="description">',
+        `${r.description}`,
+        '</div>',
+        '</article>'];
+        $('SECTION.places').append(article.join(''));
+      }
+    },
+    error: function (error) {
+      console.error('Error:', error);
     }
   });
 });

@@ -18,8 +18,9 @@ $(document).ready(function () {
       delete selectedAmenities[amenityId];
     }
 
-    // Update the h4 tag inside the div Amenities with the list
-    // of Amenities checked
+    /* Update the h4 tag inside the div Amenities with the list
+     * of Amenities checked
+     */
 
     // create an empty list
     let amenitiesList = '';
@@ -32,22 +33,6 @@ $(document).ready(function () {
         amenitiesList += ', ' + id;
       }
       $('DIV.amenities h4').text(amenitiesList);
-    }
-  });
-
-  /* Check if API service is available */
-  $.ajax({
-    url: 'http://0.0.0.0:5001/api/v1/status',
-    method: 'GET',
-    datatype: 'json',
-    success: function (data) {
-      // show if API is available using a button signal
-      console.log(data.status);
-      if (data.status === 'OK') {
-        $('#api_status').addClass('available');
-      } else {
-        $('#api_status').removeClass('available');
-      }
     }
   });
 });
