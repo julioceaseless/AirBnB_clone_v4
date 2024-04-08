@@ -3,7 +3,7 @@ $(document).ready(function () {
   const selectedAmenities = {};
 
   // Listen for changes on input checkboxes
-  $('input[type="checkbox"]').change(function () {
+  $('.amenity_input').change(function () {
     // retrieve amenity id from data-amenity-id attribute
     const amenityId = $(this).data('id');
     // retrieve amenity name
